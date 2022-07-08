@@ -51,8 +51,10 @@ def tokenize(inputfile, outputfile) :
         xml_file.write("</tokens>\n")
     xml_file.close()
     file_descriptor.close()
+
 inputfile=input("Enter the name of the file to be tokenized: ")
-outputfile=inputfile.split()[0]+".xml"
+
+outputfile=inputfile.split(".")[0]+".xml"
 tokenize(inputfile, outputfile)                
                 
                     
