@@ -30,17 +30,19 @@ def is_identifier(token) :
         ret = 1
     return ret
 
-def get_next_token() :
-    line = file_descriptor.readline()
-    token =""
-    words = line.split(' ')
-    while len(words) <= 1 and line != "" :
-        line = file_descriptor.readline()
-        words = line.split(' ')
-    if line != "" and len(words) == 3:
+
+def get_next_token() :#returns the next token in the file
+    line = file_descriptor.readline() #read the next line, one line at a time
+    token ="" #initialize the token
+    words = line.split(' ') #split the line into words
+    while len(words) <= 1 and line != "" : #if the line is "token" or if its empty
+        line = file_descriptor.readline() #read the next line
+        words = line.split(' ') #split the line into words
+
+    if line != "" and len(words) == 3: #<symbol> + </symbol>
         token = words[1]
-    elif len(words) > 3 :
-        token =' '.join(words[1:len(words)-1])
+    elif len(words) > 3 :#if its a string   <> hello world <>
+        token =' '.join(words[1:len(words)-1]) #join the words together
     return token
     
 def parse(outputfile, outputfile2) :
@@ -51,14 +53,15 @@ def parse(outputfile, outputfile2) :
     compile_class()
     
 def compile_class():
-    newline = ""
-    numspaces = 0
-    token = get_next_token()
+    newline = "" #for writing to the xml file
+    numspaces = 0 #for indentation
+    token = get_next_token() #get the next token
+    #class handling
     if token == "class" :
         newline += "<class>\n"
-        numspaces +=2
-        newline = put_space(numspaces, newline)
-        newline += "<keyword> class </keyword>\n"
+        numspaces +=2 #increment the indentation (indentaion 2)
+        newline = put_space(numspaces, newline)#add the indentation
+        newline += "<keyword> class </keyword>\n"#add the keyword class
         token = get_next_token()
         if is_identifier(token) == 1 :
             newline = put_space(numspaces, newline)
@@ -982,7 +985,7 @@ def compile_expressionlist(numspaces) :
     xml_file.write(newline)
     return token
     
-    
+parse("TSquare.xml", "Square.xml")   
       
     
     
