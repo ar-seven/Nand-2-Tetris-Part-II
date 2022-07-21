@@ -4,4 +4,6 @@ Nand2Tetris / NandToTetris Part 2 / II done in python upto syntax analyser of Ja
 ## Usage:
 This program will create parsed xml files for all .jack files in the directory
 
-Linux: ```python3 compile.py <Directory_path>```
+Linux Terminal: ```python3 compile.py <Directory_path>```
+
+Windows command Line: ```python compile.py <Directory_path>```

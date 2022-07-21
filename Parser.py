@@ -831,7 +831,7 @@ def compile_letstatement(numspaces, token):
     xml_file.write(newline)
     
     
-def compile_varstatement(numspaces, token) :
+def compile_varstatement(numspaces, token) : 
     newline = ""
     newline = put_space(numspaces, newline)
     newline += "<varDec>\n"
