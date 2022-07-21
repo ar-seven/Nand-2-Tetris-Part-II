@@ -1,7 +1,7 @@
 import re
 import sys
 
-keywords = ['class', 'constructor', 'function', 'method', 'field', 'static', 'var', 'int', 'char', 'boolean', 'void', 'true', 'false', 'null', 'this', 'let', 'do', 'if', 'else',            'while', 'return']
+keywords = ['class', 'constructor', 'function', 'method', 'field', 'static', 'var', 'int', 'char', 'boolean', 'void', 'true', 'false', 'null', 'this', 'let', 'do', 'if', 'else','while', 'return']
 symbols = ['{', '}', '(', ')', '[', ']', '.', ',', ';', '+', '-', '*', '/', '&', '|', '<', '>', '=', '~', '&lt;', '&gt;', '&amp;' , '&quot;'] 
 ops = [ '+', '-', '*', '/', '&lt;', '&gt;', '=', '&amp;' , '&quot;' , '|', '[' , '(']
 statements = [ 'if', 'while' , 'let', 'do' , 'return' ]
@@ -46,7 +46,7 @@ def get_next_token() :#returns the next token in the file
     return token
     
 def parse(outputfile, outputfile2) :
-    global file_descriptor
+    global file_descriptor#globalize the file descriptor
     file_descriptor=open(outputfile, "r")
     global xml_file 
     xml_file =open(outputfile2, 'w')
@@ -86,6 +86,10 @@ def compile_class():
                     newline = put_space(numspaces, newline)
                     newline += "</class>\n"
                     xml_file.write(newline)
+                    #close files
+                    file_descriptor.close()
+                    xml_file.close()
+
                 else:
                     print("\n Syntax Error : Expected class variable declaration or method declaration")
                     sys.exit()
@@ -439,7 +443,7 @@ def compile_expression(numspaces, token) :
             prev_token = token
             token = get_next_token()
         elif token == "~" or (token == '-' and prev_token in ops):
-            print(prev_token)
+            #print(prev_token)
             newline = put_space(numspaces, newline)
             newline += "<term>\n"
             numspaces += 2
@@ -712,7 +716,7 @@ def compile_ifstatement(numspaces, token) :
      
         
     if token == "{" :
-        print (newline)
+        #print (newline)
         newline = put_space(numspaces, newline)
         newline += "<symbol> { </symbol>\n"
     else:
@@ -985,7 +989,7 @@ def compile_expressionlist(numspaces) :
     xml_file.write(newline)
     return token
     
-parse("TSquare.xml", "Square.xml")   
+#parse("TSquare.xml", "Square.xml")   
       
     
     
