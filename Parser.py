@@ -30,7 +30,6 @@ def is_identifier(token) :
         ret = 1
     return ret
 
-
 def get_next_token() :#returns the next token in the file
     line = file_descriptor.readline() #read the next line, one line at a time
     token ="" #initialize the token
@@ -51,7 +50,7 @@ def parse(outputfile, outputfile2) :
     global xml_file 
     xml_file =open(outputfile2, 'w')
     compile_class()
-    
+#aravind
 def compile_class():
     newline = "" #for writing to the xml file
     numspaces = 0 #for indentation
@@ -63,11 +62,11 @@ def compile_class():
         newline = put_space(numspaces, newline)#add the indentation
         newline += "<keyword> class </keyword>\n"#add the keyword class
         token = get_next_token()
-        if is_identifier(token) == 1 :
+        if is_identifier(token) == 1 :        #class name
             newline = put_space(numspaces, newline)
-            newline += "<identifier> " + token + " </identifier>\n"
+            newline += "<identifier> " + token + " </identifier>\n"#class name done
             token = get_next_token()
-            if token == "{" :
+            if token == "{" :       #class name {
                 newline = put_space(numspaces, newline)
                 newline += "<symbol> { </symbol>\n"
                 xml_file.write(newline)
@@ -103,7 +102,7 @@ def compile_class():
         print("\n Syntax Error : No class in file ")
         sys.exit()
     
-
+#karthik
 def compile_classVarDec(token, numspaces):
     newline = ""
     newline = put_space(numspaces, newline)
@@ -111,11 +110,11 @@ def compile_classVarDec(token, numspaces):
     numspaces += 2
     if token == "field" or token =="static":
         newline = put_space(numspaces, newline)
-        newline += "<keyword> " + token + " </keyword>\n"
+        newline += "<keyword> " + token + " </keyword>\n"               #field or static added
         token=get_next_token()
-        if token in type :
+        if token in type : #char,int,boolean
             newline = put_space(numspaces, newline)
-            newline += "<keyword> " + token + " </keyword>\n"
+            newline += "<keyword> " + token + " </keyword>\n"           #int or whatsoever added
         elif is_identifier(token) == 1 :
             newline = put_space(numspaces, newline)
             newline += "<identifier> " + token + " </identifier>\n"
@@ -124,16 +123,16 @@ def compile_classVarDec(token, numspaces):
             sys.exit()    
         token=get_next_token()
         count = 0
-        while is_identifier(token) == 1 :
+        while is_identifier(token) == 1 :              #variable name, while iterate if there is ','
             count += 1
             newline = put_space(numspaces, newline)
             newline += "<identifier> " + token + " </identifier>\n"
             token=get_next_token()
 
-            if token == "," :
+            if token == "," : #next token is ',' then wont enter elif and go for the loop
                 newline = put_space(numspaces, newline)
                 newline += "<symbol> , </symbol>\n"
-                token=get_next_token()
+                token=get_next_token()     #here token will be ; if no more variables
             elif token == ";" :
                 newline = put_space(numspaces, newline)
                 newline += "<symbol> ; </symbol>\n"
@@ -150,7 +149,7 @@ def compile_classVarDec(token, numspaces):
             newline += "</classVarDec>\n"
 
     xml_file.write(newline) 
-    
+#vishnu    
 def compile_subroutineDec(token,numspaces):
     newline = ""
     newline = put_space(numspaces, newline)
@@ -170,7 +169,7 @@ def compile_subroutineDec(token,numspaces):
             print("\n Syntax Error : Function Type missing ")
             sys.exit()
         token=get_next_token()
-        if is_identifier(token) == 1 : 
+        if is_identifier(token) == 1 : #function name
             newline = put_space(numspaces, newline)
             newline += "<identifier> " + token + " </identifier>\n"
         else:
@@ -268,7 +267,8 @@ def compile_subroutineDec(token,numspaces):
     newline = put_space(numspaces, newline)    
     newline += "</subroutineDec>\n" 
     xml_file.write(newline)
-            
+
+#akhliesh     
 def compile_statements(token, numspaces) :
     newline = ""
     newline = put_space(numspaces, newline)
@@ -300,7 +300,7 @@ def compile_statements(token, numspaces) :
     newline += "</statements>\n"  
     xml_file.write(newline)
     return token
-    
+#aravind
 def compile_expression(numspaces, token) :
     newline = ""
     prev_token = token
@@ -622,7 +622,7 @@ def compile_expression(numspaces, token) :
         print("\n Syntax Error : Expression syntax error")
         sys.exit()
     return token,newline   
-
+#vishnui
 def compile_whilestatement(numspaces, token) :
     newline = ""
     newline = put_space(numspaces, newline)
@@ -674,7 +674,7 @@ def compile_whilestatement(numspaces, token) :
         sys.exit()
     xml_file.write(newline)
 
-    
+#sou    
 def compile_ifstatement(numspaces, token) :
     newline = ""
     newline = put_space(numspaces, newline)
@@ -716,7 +716,6 @@ def compile_ifstatement(numspaces, token) :
      
         
     if token == "{" :
-        #print (newline)
         newline = put_space(numspaces, newline)
         newline += "<symbol> { </symbol>\n"
     else:
@@ -749,7 +748,7 @@ def compile_ifstatement(numspaces, token) :
         sys.exit()
     xml_file.write(newline)
     return token
-
+#sou
 def compile_elsestatement(numspaces, token) :
     newline = ""
     newline = put_space(numspaces, newline)
@@ -776,7 +775,8 @@ def compile_elsestatement(numspaces, token) :
         newline += "<symbol> } </symbol>\n"
         
     xml_file.write(newline)    
-    
+
+#sowji
 def compile_letstatement(numspaces, token):
     newline = ""
     newline = put_space(numspaces, newline)
@@ -830,7 +830,7 @@ def compile_letstatement(numspaces, token):
     newline += "</letStatement>\n"
     xml_file.write(newline)
     
-    
+#sowji 
 def compile_varstatement(numspaces, token) : 
     newline = ""
     newline = put_space(numspaces, newline)
@@ -880,7 +880,7 @@ def compile_varstatement(numspaces, token) :
         newline += "</varDec>\n"
     
     xml_file.write(newline)
-        
+#karthik   
 def compile_returnStatement(numspaces, token) :
     newline = ""
     newline = put_space(numspaces, newline)
@@ -902,7 +902,7 @@ def compile_returnStatement(numspaces, token) :
     newline = put_space(numspaces, newline)
     newline += "</returnStatement>\n"
     xml_file.write(newline)
-    
+#sowji
 def compile_dostatement(numspaces, token) :
     newline = ""
     newline = put_space(numspaces, newline)
@@ -959,7 +959,7 @@ def compile_dostatement(numspaces, token) :
     
     xml_file.write(newline)
         
-        
+#karthik        
 def compile_expressionlist(numspaces) :
     newline = ""
     newline = put_space(numspaces, newline)
@@ -988,8 +988,7 @@ def compile_expressionlist(numspaces) :
     
     xml_file.write(newline)
     return token
-    
-#parse("TSquare.xml", "Square.xml")   
+parse("SquareT.xml", "Square.xml")   
       
     
     
